@@ -1,0 +1,166 @@
+-- Main GUI Script with Transparent Background
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "ShizlsGUI"
+screenGui.Parent = game:GetService("CoreGui")
+
+-- Create Main Button
+local mainButton = Instance.new("TextButton")
+mainButton.Size = UDim2.new(0.15, 0, 0.06, 0)  -- Main button size
+mainButton.Position = UDim2.new(0.4, 0, 0.4, 0)  -- Centered position
+mainButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)  -- Green color
+mainButton.Text = "Open Shizls GUI"
+mainButton.Parent = screenGui
+mainButton.Draggable = true
+
+-- Add "Made with ChatGPT" Label to Main Button
+local chatGPTLabel = Instance.new("TextLabel")
+chatGPTLabel.Size = UDim2.new(1, 0, 0.3, 0)
+chatGPTLabel.Position = UDim2.new(0, 0, 0.7, 0)
+chatGPTLabel.BackgroundTransparency = 1
+chatGPTLabel.Text = "Made with ChatGPT"
+chatGPTLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+chatGPTLabel.Font = Enum.Font.SourceSans
+chatGPTLabel.TextSize = 14
+chatGPTLabel.Parent = mainButton
+
+-- Function to show notifications
+local function showNotification(text)
+    local notification = Instance.new("TextLabel")
+    notification.Size = UDim2.new(0.4, 0, 0.05, 0)
+    notification.Position = UDim2.new(0.3, 0, 0.2, 0)
+    notification.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    notification.TextColor3 = Color3.fromRGB(255, 255, 255)
+    notification.Text = text
+    notification.Font = Enum.Font.SourceSansBold
+    notification.TextSize = 16
+    notification.Parent = screenGui
+
+    wait(2)
+    for i = 1, 20 do
+        notification.TextTransparency = i / 20
+        wait(0.05)
+    end
+    notification:Destroy()
+end
+
+-- Shizls GUI Frame
+local shizlsFrame
+
+-- Function to load the Shizls GUI with all tabs
+local function loadShizlsGUI()
+    if not shizlsFrame then
+        shizlsFrame = Instance.new("Frame")
+        shizlsFrame.Size = UDim2.new(0.5, 0, 0.5, 0)
+        shizlsFrame.Position = UDim2.new(0.25, 0, 0.25, 0)
+        shizlsFrame.BackgroundColor3 = Color3.fromRGB(0, 255, 255)
+        shizlsFrame.BackgroundTransparency = 0.3
+        shizlsFrame.BorderSizePixel = 0
+        shizlsFrame.Parent = screenGui
+        shizlsFrame.Draggable = true
+        shizlsFrame.Active = true
+
+        -- Header Bar
+        local header = Instance.new("TextLabel")
+        header.Size = UDim2.new(1, 0, 0.1, 0)
+        header.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+        header.Text = "Shizls GUI"
+        header.TextColor3 = Color3.fromRGB(255, 255, 255)
+        header.Font = Enum.Font.SourceSansBold
+        header.TextSize = 16
+        header.Parent = shizlsFrame
+
+        -- Version Label at the Top Left
+        local versionLabel = Instance.new("TextLabel")
+        versionLabel.Size = UDim2.new(0.1, 0, 0.05, 0)
+        versionLabel.Position = UDim2.new(0.01, 0, 0.01, 0)
+        versionLabel.BackgroundTransparency = 1
+        versionLabel.Text = "V1.6"  -- Updated version to v1.6
+        versionLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+        versionLabel.Font = Enum.Font.SourceSansBold
+        versionLabel.TextSize = 14
+        versionLabel.Parent = shizlsFrame
+
+        -- Button Tab List with All Tabs (Ordered)
+        local tabs = {
+            { Name = "Infinite Yield", URL = "https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source" },
+            { Name = "Early Access Yuji", URL = "https://raw.githubusercontent.com/Kenjihin69/Kenjihin69/refs/heads/main/Yuji%20early%20access" },
+            { Name = "Voltra", URL = "https://raw.githubusercontent.com/Reapvitalized/TSB/refs/heads/main/VOLTA.lua" },
+            { Name = "Arcaura", URL = "https://raw.githubusercontent.com/Reapvitalized/TSB/refs/heads/main/ARCAURA.lua" },
+            { Name = "Gojo 1", URL = "https://pastebin.com/raw/777Q4QDN" },
+            { Name = "Mahito", URL = "https://raw.githubusercontent.com/Kenjihin69/Kenjihin69/refs/heads/main/Mahitotsbupdate" },
+            { Name = "Gojo 2", URL = "https://pastebin.com/raw/zF6Rdky0" },
+            { Name = "Gojo 3", URL = "https://raw.githubusercontent.com/skibiditoiletfan2007/BaldyToSorcerer/main/Latest.lua" },
+            { Name = "Gojo 4", URL = "https://pastebin.com/raw/3Cz8kF8M" },
+            { Name = "Cool GUI", URL = "https://raw.githubusercontent.com/Wi-sp/Limitless-legacy/refs/heads/main/GUI" },
+            { Name = "Chill Guy", URL = "https://raw.githubusercontent.com/Reapvitalized/TSB/main/REDSIGN.lua" },
+            { Name = "Aphophenia", URL = "https://raw.githubusercontent.com/Reapvitalized/TSB/main/APOPHENIA.lua" },
+            { Name = "Jun", URL = "https://raw.githubusercontent.com/Kenjihin69/Kenjihin69/refs/heads/main/Tp%20exploit%20saitama%20to%20jun" },
+            { Name = "Goku", URL = "https://rawscripts.net/raw/The-Strongest-Battlegrounds-Goku-Moveset-V2-17977" },
+            { Name = "Cool Hub", URL = "https://raw.githubusercontent.com/h8h88/hubfr/main/hubfr" },
+            { Name = "Nosakatan", URL = "https://rawscripts.net/raw/The-Strongest-Battlegrounds-Hero-to-True-Nosakatan-18742" },
+            { Name = "Toji", URL = "https://pastebin.com/raw/VQnyWP5D" },
+            { Name = "Glacier Hub", URL = "https://raw.githubusercontent.com/xVicity/GLACIER/main/LATEST.lua" },
+            { Name = "Phantasm", URL = "https://raw.githubusercontent.com/ATrainz/main/main/Phantasm-Loader.lua" },
+            { Name = "Deku", URL = "https://pastebin.com/raw/CaXFZ2S2" },
+            { Name = "UNIVERSAL", URL = "https://raw.githubusercontent.com/01iq/scripthub/refs/heads/main/solara" },
+            { Name = "Gojo 5", URL = "https://raw.githubusercontent.com/skibiditoiletfan2007/BaldyToSorcerer/refs/heads/main/LatestV2.lua" },
+            { Name = "Freeze in Place", URL = nil },
+            { Name = "Testbot", URL = "https://raw.githubusercontent.com/Shizl-ui/testbot/refs/heads/main/testbot" },
+            { Name = "Todo", URL = "https://paste.ee/r/Kd9uX" },
+            { Name = "Sonic.exe", URL = "https://raw.githubusercontent.com/Nova2ezz/sonic-exe-moveset-3/refs/heads/main/3" },
+            { Name = "Your Average Guy", URL = "https://raw.githubusercontent.com/Shizl-ui/dwadwadwadaw/refs/heads/main/awdadwadadwad" } -- Replaced tab
+        }
+
+        -- Positioning for Ordered Grid Layout
+        local buttonSize = UDim2.new(0.15, 0, 0.06, 0)
+        local spacing = 0.02
+        local row, col = 0, 0
+
+        for _, tab in ipairs(tabs) do
+            local tabButton = Instance.new("TextButton")
+            tabButton.Size = buttonSize
+            tabButton.Position = UDim2.new(0.02 + (col * (0.15 + spacing)), 0, 0.15 + (row * (0.06 + spacing)), 0)
+            tabButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+            tabButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+            tabButton.Text = tab.Name
+            tabButton.Font = Enum.Font.SourceSans
+            tabButton.TextSize = 14
+            tabButton.Parent = shizlsFrame
+            tabButton.MouseButton1Click:Connect(function()
+                if tab.URL then
+                    loadstring(game:HttpGet(tab.URL, true))()
+                    showNotification("Script runned")
+                end
+            end)
+
+            col = col + 1
+            if col >= 3 then
+                col = 0
+                row = row + 1
+            end
+        end
+    end
+end
+
+-- Main Button Click to Confirm and Open GUI
+local confirmed = false
+mainButton.MouseButton1Click:Connect(function()
+    if not confirmed then
+        showNotification("Are you sure?")
+        confirmed = true
+    else
+        loadShizlsGUI()
+        showNotification("Your wish has been granted.")
+    end
+end)
+
+-- Toggle GUI visibility with Left Control key
+local UserInputService = game:GetService("UserInputService")
+UserInputService.InputBegan:Connect(function(input)
+    if input.KeyCode == Enum.KeyCode.LeftControl then
+        if shizlsFrame then
+            shizlsFrame.Visible = not shizlsFrame.Visible
+        end
+    end
+end)
